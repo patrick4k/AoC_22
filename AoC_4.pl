@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# https://adventofcode.com/2022/day/4
 use strict;
 use warnings FATAL => 'all';
 use File::Basename ();

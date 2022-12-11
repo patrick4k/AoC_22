@@ -1,3 +1,4 @@
+# https://adventofcode.com/2022
 package AoC;
 use strict;
 use warnings FATAL => 'all';
