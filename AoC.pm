@@ -5,11 +5,26 @@ use warnings FATAL => 'all';
 use Cwd;
 use Data::Dumper;
 use Storable;
+use File::Spec::Functions;
+use JSON;
+use Exporter;
+our @ISA = qw(Exporter);
+our @EXPORT = qw(GetInput OutFile CloseFH CheckPattern Dump Pause DeepClone ToJSON);
 
 sub GetInput {
-    my $filename = shift;
-    open my $fh, getcwd().'\INPUT\\'.$filename or die 'Could not locate input file';
+    my $filepath = catfile(catdir(getcwd(),'INPUT'), shift);
+    open my $fh, $filepath or die 'Could not locate file: '.$filepath."\n";
     return $fh;
+}
+
+sub OutFile {
+    my $filepath = catfile(catdir(getcwd(),'OUT'), shift);
+    open my $fh, '>', $filepath or die $!."\nCould not open dir: $filepath\n";
+    return $fh;
+}
+
+sub CloseFH {
+    close shift;
 }
 
 sub CheckPattern {
@@ -36,8 +51,15 @@ sub Pause {
     <STDIN>;
 }
 
-sub Clone {
+sub DeepClone {
     return(Storable::dclone(shift()));
+}
+
+sub ToJSON {
+    my ($ref, $filename) = @_;
+    my $fh = OutFile($filename);
+    print $fh to_json($ref);
+    CloseFH($fh);
 }
 
 1;

@@ -6,12 +6,15 @@ use File::Basename ();
 use lib File::Basename::dirname( $0 );
 use AoC;
 
-my $fh = AoC::GetInput('7ex.txt');
+my $fh = GetInput('7.txt');
 
 my %home = (
     next  => {},
     files => []
 );
+
+my ($totalSize, $reqSize) = (70000000, 30000000);
+my $reqFreeSpace = $totalSize - $reqSize;
 
 my @currDir = (['/']);
 my @allDirs = (['/']);
@@ -38,11 +41,10 @@ sub main {
         }
     }
 
-    AoC::Dump(\%home);
-
+    my $minReqDir = DeepClone(\%home);
     for my $dirs_aRef (@allDirs) {
-        my $dir = GetDirectory($dirs_aRef);
-
+        my $size = CalcSize($dirs_aRef);
+        # TODO find smallest dir to delete
     }
 }
 
@@ -94,13 +96,19 @@ sub WriteDir {
 }
 
 sub CalcSize {
-    my %dir = %{shift()};
+    my @parent = @{shift()};
+    my $parent = join '/', @parent;
+    my $parentDir = GetDirectory(\@parent);
+    my @dirs = grep {join('/', @{$_}) =~ /^$parent/} @allDirs;
     my $size = 0;
-    for my $file (@{$dir{files}}) {
-        $size += $file->{size};
+    for (@dirs) {
+        my $dir = GetDirectory($_);
+        for (@{$dir->{files}}) {
+            $size += $_->{size};
+        }
     }
-
-
+    $parentDir->{size} = $size;
+    return $size;
 }
 
 main;
