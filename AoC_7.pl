@@ -13,8 +13,7 @@ my %home = (
     files => []
 );
 
-my ($totalSize, $reqSize) = (70000000, 30000000);
-my $reqFreeSpace = $totalSize - $reqSize;
+my ($totalSize, $reqFree) = (70000000, 30000000);
 
 my @currDir = (['/']);
 my @allDirs = (['/']);
@@ -40,12 +39,17 @@ sub main {
             }
         }
     }
-
+    CalcSize(['/']);
     my $minReqDir = DeepClone(\%home);
+    my $currFree = $totalSize - $home{size};
     for my $dirs_aRef (@allDirs) {
         my $size = CalcSize($dirs_aRef);
-        # TODO find smallest dir to delete
+        if ($size + $currFree > $reqFree && $size < $minReqDir->{size}) {
+            $minReqDir = GetDirectory($dirs_aRef);
+        }
     }
+    Dump($minReqDir);
+    print "SIZE: $minReqDir->{size}";
 }
 
 sub GetDirectory {
