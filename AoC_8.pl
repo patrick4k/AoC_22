@@ -10,7 +10,7 @@ use List::Util qw(all max);
 
 my $fh = GetInput('8.txt');
 
-# $trees['up/down'][left/right];
+# $trees['top->down']['left->right'];
 my @trees = ();
 my ($width, $height);
 
