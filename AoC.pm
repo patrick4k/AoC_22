@@ -9,7 +9,7 @@ use File::Spec::Functions;
 use JSON;
 use Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(GetInput OutFile CloseFH CheckPattern Dump Pause DeepClone ToJSON);
+our @EXPORT = qw(GetInput OutFile CloseFH CheckPattern Dump Pause DeepClone Sum);
 
 sub GetInput {
     my $filepath = catfile(catdir(getcwd(),'INPUT'), shift);
@@ -55,11 +55,12 @@ sub DeepClone {
     return(Storable::dclone(shift()));
 }
 
-sub ToJSON {
-    my ($ref, $filename) = @_;
-    my $fh = OutFile($filename);
-    print $fh to_json($ref);
-    CloseFH($fh);
+sub Sum {
+    my $sum = 0;
+    for (@_) {
+        $sum += $_;
+    }
+    return $sum;
 }
 
 1;

@@ -39,6 +39,7 @@ sub main {
             }
         }
     }
+
     CalcSize(['/']);
     my $minReqDir = DeepClone(\%home);
     my $currFree = $totalSize - $home{size};
@@ -48,6 +49,7 @@ sub main {
             $minReqDir = GetDirectory($dirs_aRef);
         }
     }
+
     Dump($minReqDir);
     print "SIZE: $minReqDir->{size}";
 }
