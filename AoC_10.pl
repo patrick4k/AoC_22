@@ -50,7 +50,7 @@ sub Draw {
     state $i = 0;
     state @line = ();
 
-    push @line, (any{$_ == $i} ($X-1..$X+1)) ? '#' : '.';
+    push @line, (any {$_ == $i} ($X-1..$X+1)) ? '#' : '.';
     $i++;
 
     if ($i == 40) {
