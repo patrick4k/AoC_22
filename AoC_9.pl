@@ -31,6 +31,7 @@ sub main {
 sub AddKnots {
     my $n = shift;
     my $temp = \%head;
+
     while (defined $temp->{tail}) {
         $temp = $temp->{tail};
     }
