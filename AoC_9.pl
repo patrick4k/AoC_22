@@ -16,8 +16,8 @@ my %unitVec = (
 );
 
 my %head = (
-    i    => 0,
-    j    => 0
+    i => 0,
+    j => 0
 );
 
 my %tailVisited = (0 => {0 => 1});
@@ -37,8 +37,8 @@ sub AddKnots {
     }
 
     $temp = $temp->{tail} = { # why is this even allowed
-        i    => $temp->{i},
-        j    => $temp->{j}
+        i => $temp->{i},
+        j => $temp->{j}
     } for (1..$n);
 }
 

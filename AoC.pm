@@ -52,7 +52,7 @@ sub Pause {
 }
 
 sub DeepClone {
-    return(Storable::dclone(shift()));
+    return(Storable::dclone(shift));
 }
 
 sub Sum {
