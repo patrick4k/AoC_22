@@ -23,20 +23,22 @@ my %head = (
 my %tailVisited = (0 => {0 => 1});
 
 sub main {
-    AddNode() for (1..9);
+    AddKnots(9);
     MoveH(split /\s/) while <$fh>;
     print 'Total Visited by T: '.GetVisited();
 }
 
-sub AddNode {
+sub AddKnots {
+    my $n = shift;
     my $temp = \%head;
     while (defined $temp->{tail}) {
         $temp = $temp->{tail};
     }
-    $temp->{tail} = {
+
+    $temp = $temp->{tail} = { # why is this even allowed
         i    => $temp->{i},
         j    => $temp->{j}
-    };
+    } for (1..$n);
 }
 
 sub MoveH {
